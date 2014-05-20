@@ -80,4 +80,12 @@ public final class CamelJmsToFileExample {
         Thread.sleep(1000);
         context.stop();
     }
+    
+    
+//    <purchaseList>
+//    	<meal name="Cake" postAsHighlight="true">
+//    		<ingredient name="egg" quantity="20" unit="trays" price="20" priceCurrency="EUR" />
+//    	</meal>
+//    </purchaseList>
+    
 }
