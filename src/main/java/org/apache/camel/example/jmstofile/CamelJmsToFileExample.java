@@ -75,7 +75,7 @@ public final class CamelJmsToFileExample {
             template.sendBody("test-jms:queue:test.queue", "Tgzugghughuest Message: " + i);
         }
         // END SNIPPET: e5
-
+        // TEST_COMMIT_ALEX
         // wait a bit and then stop
         Thread.sleep(1000);
         context.stop();
