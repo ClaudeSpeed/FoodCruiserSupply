@@ -20,7 +20,7 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	System.out.println("configuration");
     	
     	//Apparently it works to create a new CamelContext and work with it here.
-    	//I'm not sure if this is best practice..
+    	//I'm not sure if this is best practice..dd
 //    	CamelContext context = new DefaultCamelContext(); 
 //    	ProducerTemplate template = context.createProducerTemplate();
         
