@@ -21,7 +21,7 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	
     	//Apparently it works to create a new CamelContext and work with it here.
     	//I'm not sure if this is best practice..
-//    	CamelContext context = new DefaultCamelContext(); 
+//    	CamelContext context = new DefaultCamelContext(); dd
 //    	ProducerTemplate template = context.createProducerTemplate();
         
 //    	from jmsToFileExample
