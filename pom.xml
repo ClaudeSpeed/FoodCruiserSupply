@@ -40,6 +40,11 @@
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-jms</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.camel</groupId>
+		    <artifactId>camel-mail</artifactId>
+		</dependency>
+
 
     <!-- ActiveMQ dependencies -->
 		<dependency>
@@ -85,7 +90,7 @@
 			</properties>
 		</profile>
 	</profiles>
-
+	
 	<build>
 		<plugins>
 			<!-- Allows the example to be run via 'mvn compile exec:java' -->
