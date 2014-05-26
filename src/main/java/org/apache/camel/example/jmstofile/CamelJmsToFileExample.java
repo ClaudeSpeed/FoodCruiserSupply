@@ -20,10 +20,13 @@ import javax.jms.ConnectionFactory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.ExchangeBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
+
 
 /**
  * An example class for demonstrating some of the basics behind Camel. This
@@ -51,8 +54,22 @@ public final class CamelJmsToFileExample {
         
         context.start();
         
-        for (int i = 0; i < 2; i++) {
-            template.sendBody("test-jms:queue:test.queue", "Luketest Message: " + i);
+        PurchaseList pl = new PurchaseList();
+        Meal meal = new Meal();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setName("PorkMeat");
+        ingredient.setQuantity(5);
+        ingredient.setUnit("kg");
+        meal.addIngredient(ingredient);
+        meal.setName("Gulasch");
+        meal.setPostAsHighlight(true);
+        pl.addMeal(meal);
+        
+        
+        
+        
+        for (int i = 0; i < 1; i++) {
+            template.sendBody("test-jms:queue:test.queue", "start");
         }
         
 //        private void sendEmail(String body) {
@@ -61,7 +78,7 @@ public final class CamelJmsToFileExample {
 //            template.sendBodyAndHeader(url, body, "subject", "New incident reported");
 //        }
         
-        Thread.sleep(1000);
+        Thread.sleep(120000);
         context.stop();
     }
     
