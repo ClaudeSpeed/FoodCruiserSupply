@@ -24,6 +24,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.ExchangeBuilder;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.twitter.TwitterComponent;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 
@@ -35,6 +36,11 @@ import org.apache.camel.impl.DefaultCamelContext;
  */
 public final class CamelJmsToFileExample {
 
+	private static String consumerKey = "WuRNypprsexhZtWmjOC0qa95y";
+    private static String consumerSecret = "7e2mdWsXpZlCxe3cj1fQFzH9xJXDR57ORo5a4gYzPEQlowh5bg";
+    private static String accessToken = "1426115462-pLnbFV2yDQZc4c2sWEbY0HeWsPNOoaZvcFG0LB2";
+    private static String accessTokenSecret = "0pSYQE4xFVi9GlaIWCP3BpOrM2BJwUcTPvbkaBG12Sg1j";
+	
     private CamelJmsToFileExample() {        
     }
     
@@ -47,10 +53,19 @@ public final class CamelJmsToFileExample {
         context.addComponent("test-jms", JmsComponent.jmsComponentAutoAcknowledge(connectionFactory));
         
         RouteBuilder rb = new CruiseRouteBuilder();
+        TwitterRoute tr = new TwitterRoute();
+                
+        //setup Twitter authentification
+        tr.setAccessToken(accessToken);
+        tr.setAccessTokenSecret(accessTokenSecret);
+        tr.setConsumerKey(consumerKey);
+        tr.setConsumerSecret(consumerSecret);
         
+        context.addRoutes(tr);
         context.addRoutes(rb);
         
         ProducerTemplate template = context.createProducerTemplate();
+        ProducerTemplate template2 = context.createProducerTemplate();
         
         context.start();
         
@@ -65,8 +80,7 @@ public final class CamelJmsToFileExample {
         meal.setPostAsHighlight(true);
         pl.addMeal(meal);
         
-        
-        
+        template2.sendBody("direct:tweet", "tweet");
         
         for (int i = 0; i < 1; i++) {
             template.sendBody("test-jms:queue:test.queue", "start");
@@ -78,7 +92,7 @@ public final class CamelJmsToFileExample {
 //            template.sendBodyAndHeader(url, body, "subject", "New incident reported");
 //        }
         
-        Thread.sleep(120000);
+        Thread.sleep(1000);
         context.stop();
     }
     

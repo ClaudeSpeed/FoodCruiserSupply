@@ -9,6 +9,10 @@ Camel :: Example :: JMS-File
 From: 'an unknown organization'
   - AOP alliance (http://aopalliance.sourceforge.net) aopalliance:aopalliance:jar:1.0
     License: Public Domain 
+  - twitter4j-core (http://twitter4j.org/) org.twitter4j:twitter4j-core:jar:3.0.5
+    License: Apache License 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
+  - twitter4j-stream (http://twitter4j.org/) org.twitter4j:twitter4j-stream:jar:3.0.5
+    License: Apache License 2.0  (http://www.apache.org/licenses/LICENSE-2.0)
 
 From: 'Apache Software Foundation' (http://www.apache.org)
   - Apache Log4j (http://logging.apache.org/log4j/1.2/) log4j:log4j:bundle:1.2.17
@@ -25,14 +29,6 @@ From: 'Apache Software Foundation' (http://www.apache.org/)
 From: 'FuseSource, Corp.' (http://fusesource.com/)
   - hawtbuf (http://hawtbuf.fusesource.org/hawtbuf) org.fusesource.hawtbuf:hawtbuf:bundle:1.9
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-
-From: 'Oracle' (http://www.oracle.com)
-  - JavaMail API (compat) (http://kenai.com/projects/javamail/mail) javax.mail:mail:jar:1.4.7
-    License: CDDL  (http://www.sun.com/cddl)    License: GPLv2+CE  (https://glassfish.java.net/public/CDDL+GPL_1_1.html)
-
-From: 'Oracle Corporation' (http://www.oracle.com/)
-  - JAXB Reference Implementation (http://jaxb.java.net/) com.sun.xml.bind:jaxb-impl:jar:2.2.6
-    License: CDDL 1.1  (https://glassfish.java.net/public/CDDL+GPL_1_1.html)    License: GPL2 w/ CPE  (https://glassfish.java.net/public/CDDL+GPL_1_1.html)
 
 From: 'QOS.ch' (http://www.qos.ch)
   - SLF4J API Module (http://www.slf4j.org) org.slf4j:slf4j-api:jar:1.6.6
@@ -83,9 +79,11 @@ From: 'The Apache Software Foundation' (http://www.apache.org/)
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
   - Camel :: JMS (http://camel.apache.org/camel-parent/components/camel-jms) org.apache.camel:camel-jms:bundle:2.13.0
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
-  - Camel :: Mail (http://camel.apache.org/camel-parent/components/camel-mail) org.apache.camel:camel-mail:bundle:2.13.0
+  - Camel :: Mail (http://camel.apache.org/camel-parent/examples/camel-mail) org.apache.camel:camel-mail:jar:2.13.0
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
   - Camel :: Spring (http://camel.apache.org/camel-parent/components/camel-spring) org.apache.camel:camel-spring:bundle:2.13.0
+    License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
+  - Camel :: Twitter (http://camel.apache.org/camel-parent/components/camel-twitter) org.apache.camel:camel-twitter:bundle:2.13.0
     License: The Apache Software License, Version 2.0  (http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 
