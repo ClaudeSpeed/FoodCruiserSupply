@@ -6,8 +6,18 @@ import java.util.List;
 public class Meal {
 
 	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
-	private String Name = "";
-	private boolean PostAsHighlight = false;
+	private String Name;
+	private boolean PostAsHighlight;
+
+	public Meal(String name, boolean postAsHighlight) {
+		super();
+		Name = name;
+		PostAsHighlight = postAsHighlight;
+	}
+
+	public Meal() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public List<Ingredient> getIngredients() {
 		return ingredients;

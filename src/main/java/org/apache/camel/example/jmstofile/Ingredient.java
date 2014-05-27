@@ -3,18 +3,29 @@ package org.apache.camel.example.jmstofile;
 public class Ingredient {
 	
 	public String Name = "";
-	private int Quantity = 0;
+	private double Quantity = 0;
 	private String Unit = "";
-	private int Price = 0;
-	private String PriceCurrency = "";
+	private double Price = 0;
 	
+	public Ingredient(String name, int quantity, String unit, int price) {
+		super();
+		Name = name;
+		Quantity = quantity;
+		Unit = unit;
+		Price = price;
+	}
+	
+	public Ingredient() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName() {
 		return Name;
 	}
 	public void setName(String name) {
 		Name = name;
 	}
-	public int getQuantity() {
+	public double getQuantity() {
 		return Quantity;
 	}
 	public void setQuantity(int quantity) {
@@ -26,16 +37,11 @@ public class Ingredient {
 	public void setUnit(String unit) {
 		Unit = unit;
 	}
-	public int getPrice() {
+	public double getPrice() {
 		return Price;
 	}
 	public void setPrice(int price) {
 		Price = price;
 	}
-	public String getPriceCurrency() {
-		return PriceCurrency;
-	}
-	public void setPriceCurrency(String priceCurrency) {
-		PriceCurrency = priceCurrency;
-	}
+
 }
