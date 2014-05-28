@@ -1,11 +1,15 @@
-package org.apache.camel.example.jmstofile;
+package at.ac.tuwien.workflow.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Invoice {
+import at.ac.tuwien.workflow.currencyconverter.CurrencyConverter;
 
+public class Invoice implements Serializable {
+
+	private static final long serialVersionUID = -7302148911238822832L;
 	private List<Meal> meals = new ArrayList<Meal>();
 	private Date invoiceDate;
 	private double totalAmount;

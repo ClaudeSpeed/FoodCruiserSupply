@@ -1,13 +1,18 @@
-package org.apache.camel.example.jmstofile;
+package at.ac.tuwien.workflow.dao;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AccountancyReport {
+import at.ac.tuwien.workflow.currencyconverter.CurrencyConverter;
+
+public class AccountancyReport implements Serializable {
 	
+	private static final long serialVersionUID = 6301110483090646094L;
 	private Invoice invoice;
 	private Date paymentDate;
 	private double rateOfPaymentDate;
 	private double convertedTotalAmount;
+	private String convertedTotalAmountCurrency;
 	private double exchangeProfit;
 	
 	public AccountancyReport(Invoice invoice) {
@@ -15,7 +20,7 @@ public class AccountancyReport {
 		this.invoice = invoice;
 	}
 	
-	public void settle() {
+	public void settleInvoice() {
 		paymentDate = new Date();
 		rateOfPaymentDate = new CurrencyConverter().getRate(invoice.getTotalAmountCurrency());
 	}
@@ -23,6 +28,14 @@ public class AccountancyReport {
 	//TODO 1 % gain for testing purposes
 	public void calculateExchangeProfit() {
 		exchangeProfit = convertedTotalAmount - (invoice.getTotalAmount() * invoice.getRateOfInvoiceDate() *0.99);
+	}
+
+	public String getConvertedTotalAmountCurrency() {
+		return convertedTotalAmountCurrency;
+	}
+
+	public void setConvertedTotalAmountCurrency(String convertedTotalAmountCurrency) {
+		this.convertedTotalAmountCurrency = convertedTotalAmountCurrency;
 	}
 
 	public double getRateOfPaymentDate() {

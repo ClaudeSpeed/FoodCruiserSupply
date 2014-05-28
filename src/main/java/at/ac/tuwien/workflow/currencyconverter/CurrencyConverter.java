@@ -1,8 +1,9 @@
-package org.apache.camel.example.jmstofile;
+package at.ac.tuwien.workflow.currencyconverter;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+import at.ac.tuwien.workflow.dao.AccountancyReport;
  
 public class CurrencyConverter {
 	
@@ -10,6 +11,7 @@ public class CurrencyConverter {
 	
     public double getRate(String from, String to) {
         try {
+        	//TODO -> component
             URL url = new URL("http://quote.yahoo.com/d/quotes.csv?f=l1&s=" + from + to + "=X");
             BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
             String line = reader.readLine();
@@ -17,14 +19,14 @@ public class CurrencyConverter {
                 return Double.parseDouble(line);
             }
             reader.close();
-        } catch (IOException | NumberFormatException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
  
         return 0;
     }
     
-    public double getRate(String to) {
+	public double getRate(String to) {
     	return getRate(DEFAULT_CURRENCY, to);
     }
     
@@ -38,6 +40,7 @@ public class CurrencyConverter {
     	double invoiceAmount = rp.getInvoice().getTotalAmount();
     	
     	rp.setConvertedTotalAmount(invoiceAmount * getRate(invoiceCurrency,DEFAULT_CURRENCY));
+    	rp.setConvertedTotalAmountCurrency(DEFAULT_CURRENCY);
     }
  
 }

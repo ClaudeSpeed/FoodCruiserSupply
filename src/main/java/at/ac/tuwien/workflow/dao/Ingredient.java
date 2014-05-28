@@ -1,7 +1,10 @@
-package org.apache.camel.example.jmstofile;
+package at.ac.tuwien.workflow.dao;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
 	
+	private static final long serialVersionUID = -7726285709864858431L;
 	public String Name = "";
 	private double Quantity = 0;
 	private String Unit = "";

@@ -1,10 +1,12 @@
-package org.apache.camel.example.jmstofile;
+package at.ac.tuwien.workflow.dao;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Meal {
+public class Meal implements Serializable {
 
+	private static final long serialVersionUID = -8875818395446799129L;
 	private List<Ingredient> ingredients = new ArrayList<Ingredient>();
 	private String Name;
 	private boolean PostAsHighlight;
