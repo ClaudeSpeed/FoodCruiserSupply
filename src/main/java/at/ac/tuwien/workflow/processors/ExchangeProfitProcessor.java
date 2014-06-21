@@ -15,7 +15,7 @@ public class ExchangeProfitProcessor implements Processor {
 		AccountancyReport report = exchange.getIn().getBody(AccountancyReport.class);
 		
 		//Then the accountancy calculates the exchangeGain between the date of invoice and the
-		//day of payment. (method fives 1 % gain for testing purposes)
+		//day of payment. (method gives 1 % gain for testing purposes)
 		report.calculateExchangeProfit();
 		
 		DecimalFormat df = new DecimalFormat("#.##");

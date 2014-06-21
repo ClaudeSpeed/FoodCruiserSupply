@@ -2,6 +2,7 @@ package at.ac.tuwien.workflow.camel;
 
 import org.apache.camel.Endpoint;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.component.twitter.TwitterComponent;
 
 import at.ac.tuwien.workflow.processors.CurrencyConverterProcessor;
@@ -9,6 +10,7 @@ import at.ac.tuwien.workflow.processors.ErrorProcessor;
 import at.ac.tuwien.workflow.processors.ExchangeProfitProcessor;
 import at.ac.tuwien.workflow.processors.GenerateReportProcessor;
 import at.ac.tuwien.workflow.processors.MyMailProcessor;
+import at.ac.tuwien.workflow.processors.ReportToFileProcessor;
 import at.ac.tuwien.workflow.processors.ToMailProcessor;
 import at.ac.tuwien.workflow.processors.TwitterProcessor;
 import at.ac.tuwien.workflow.processors.WeatherProcessor;
@@ -24,9 +26,10 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	
     	boolean runErrorHandling = true;
     	boolean runWeather = true;
-    	boolean runMail = true;
-    	boolean runTwitter = true;
+    	boolean runMail = false;
+    	boolean runTwitter = false;
     	boolean runCurrencyConverter = true;
+    	boolean runFtpStore = true;
     	
     	//errorHandling
     	if (runErrorHandling) {
@@ -92,7 +95,34 @@ public class CruiseRouteBuilder extends RouteBuilder {
 	    	//calculate exchange profit
 	    	from("foodSupplyCruise-jms:queue:convertedReports.queue")
 		    	.process(new ExchangeProfitProcessor())
-		    	.to("foodSupplyCruise-jms:queue:advancedConvertedReports.queue");
+	    		.to("foodSupplyCruise-jms:queue:advancedConvertedReports.queue");
+	    	
+	    	//calculate exchange profit
+	    	from("foodSupplyCruise-jms:queue:advancedConvertedReports.queue")
+		    	.process(new ReportToFileProcessor())
+	    		.to("file://target/upload");
+	    	
+    	}
+		
+		//generate report as a file and store on ftp server
+    	if (runFtpStore) {
+	    	
+
+	    	
+	        // configure properties component
+	        PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
+	        pc.setLocation("classpath:ftp.properties");
+
+	        // lets shutdown faster in case of in-flight messages stack up
+	        getContext().getShutdownStrategy().setTimeout(10);
+	        
+	        //store on ftp server
+	        //to see result, connect to ftp://81.19.145.70:21 username=hockeystuff_cruiserfoodsupply pass=cfs1234
+	        from("file:target/upload?moveFailed=../error")
+	            .log("Uploading file ${file:name}")
+	            .to("{{ftp.client}}")
+	            .log("Uploaded file ${file:name} complete.");
+	    	
     	}
     	
     }

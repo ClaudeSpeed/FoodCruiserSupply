@@ -60,10 +60,11 @@ public final class CamelMainClass {
 		//invoiceDate and invoiceCurrency (here: Fiji Dollars).
 		Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "FJD");
 		
+		//starts the business process after getting the invoice
 		template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
 		
 		ProducerTemplate templateTwitter = context.createProducerTemplate();
-		templateTwitter.sendBody("direct:tweet", purchList);
+		//templateTwitter.sendBody("direct:tweet", purchList);
 
 		Thread.sleep(5000);
 		
