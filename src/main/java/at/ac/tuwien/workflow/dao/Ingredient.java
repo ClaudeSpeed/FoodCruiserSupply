@@ -18,8 +18,15 @@ public class Ingredient implements Serializable {
 		Price = price;
 	}
 	
+	public Ingredient(String name, int quantity, String unit) {
+		super();
+		Name = name;
+		Quantity = quantity;
+		Unit = unit;
+	}
+	
 	public Ingredient() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public String getName() {
