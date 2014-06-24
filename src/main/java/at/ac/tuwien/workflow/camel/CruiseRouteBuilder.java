@@ -15,6 +15,9 @@ public class CruiseRouteBuilder extends RouteBuilder {
     private String consumerSecret;
     private String accessToken;
     private String accessTokenSecret;
+    private static String oAuthAppId = "658892194180788";
+    private static String oAuthAppSecret = "c97ca94749e303ed2726e2f2ddde41b9";
+    private static String oAuthAccessToken = "65a835fe414c80b9fb0ae7cc74df6095";
 	
     public void configure() {
     	
@@ -24,6 +27,12 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	boolean runTwitter = false;
     	boolean runCurrencyConverter = false;
     	boolean runFtpStore = false;
+    	boolean runFacebook = false;
+    	boolean runRSS = false;
+    	
+    	//RSS url
+        String rssURL = "https://"
+        		+ "?pid=12311211&sorter/field=issuekey&sorter/order=DESC&tempMax=1000&delay=10s"; //query options for the URI
     	
     	//errorHandling
     	if (runErrorHandling) {
@@ -70,7 +79,7 @@ public class CruiseRouteBuilder extends RouteBuilder {
     		from(fromMail).process(new ToInvoiceProcessor()).to("foodSupplyCruise-jms:queue:processedMail.queue");
     	}
     	
-		//push to twitter: https://twitter.com/topalexandru
+		//push to twitter: https://twitter.com/Cruise_Food (username: Cruise_Food password: foodSC01)
     	if (runTwitter) {
 			TwitterComponent tc = getContext().getComponent("twitter", TwitterComponent.class);
 			tc.setAccessToken(accessToken);
@@ -80,6 +89,19 @@ public class CruiseRouteBuilder extends RouteBuilder {
 			from("direct:tweet").process(new TwitterProcessor()).to("twitter://timeline/user");
     	}
 		
+    	//push to Facebook
+    	if (runFacebook) {    		
+    		from("direct:foo").
+    		to("facebook://postFeed?oAuthAppId=658892194180788&oAuthAppSecret=c97ca94749e303ed2726e2f2ddde41b9&oAuthAccessToken=65a835fe414c80b9fb0ae7cc74df6095");
+    	}
+    	
+    	//poll RSS
+    	if (runRSS) {
+    		from("rss:" + rssURL).
+            marshal().rss().
+            setBody(xpath("/rss/channel/item/title/text()")).
+            to("bean:rss");
+    	}
 		//generate report, convert currency, calculate exchange profit
     	if (runCurrencyConverter) {
 	        //generate report for accountancy

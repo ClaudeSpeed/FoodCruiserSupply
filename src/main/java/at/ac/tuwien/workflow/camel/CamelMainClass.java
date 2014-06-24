@@ -19,10 +19,10 @@ import at.ac.tuwien.workflow.dao.PurchaseList;
 public final class CamelMainClass {
     
 	//twitter account credentials
-	private static String consumerKey = "WuRNypprsexhZtWmjOC0qa95y";
-    private static String consumerSecret = "7e2mdWsXpZlCxe3cj1fQFzH9xJXDR57ORo5a4gYzPEQlowh5bg";
-    private static String accessToken = "1426115462-pLnbFV2yDQZc4c2sWEbY0HeWsPNOoaZvcFG0LB2";
-    private static String accessTokenSecret = "0pSYQE4xFVi9GlaIWCP3BpOrM2BJwUcTPvbkaBG12Sg1j";
+		private static String consumerKey = "DIEFSMeTdUOyng3caQu95oLbA";
+	    private static String consumerSecret = "uA4rUObPXJhcFcN3UtDhcxxSsw5cpKcjjYV7tYubnlAk8Xa2eB";
+	    private static String accessToken = "2525488392-5gnV3UkCw6TVamQA7TEfybCyKF0FgzieacSucGK";
+	    private static String accessTokenSecret = "RAayJ7wP4oEwEwH1Z5Zgwu2xSefbXvkPyFC5WhZZPHsWH";
 	
     public static void main(String args[]) throws Exception {
     	
