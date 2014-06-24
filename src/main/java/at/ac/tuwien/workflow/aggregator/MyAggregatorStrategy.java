@@ -17,11 +17,10 @@ public class MyAggregatorStrategy implements AggregationStrategy {
 		newPriceString = newPriceString.replace("Price=", "");
 		oldPriceString = oldPriceString.replace("€", "").trim();
 		newPriceString = newPriceString.replace("€", "").trim();
-		System.out.println("OldPrice:" + oldPriceString);
-		System.out.println("NewPrice:" + newPriceString);
+//		System.out.println("OldPrice:" + oldPriceString);
+//		System.out.println("NewPrice:" + newPriceString);
 		int oldPrice = Integer.parseInt(oldPriceString);
 		int newPrice = Integer.parseInt(newPriceString);
-		
 		if(oldPrice > newPrice)
 		{
 			return newExchange;

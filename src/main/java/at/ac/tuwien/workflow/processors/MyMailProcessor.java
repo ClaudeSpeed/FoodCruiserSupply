@@ -60,7 +60,6 @@ public class MyMailProcessor implements Processor {
 		
 		if(order.getOrderNr() != null){
 			exchange.getIn().setHeader("OrderID", order.getOrderNr());
-			System.out.println(order.getOrderNr());
 		}
 
 		System.out.println("EndMyMailProcessor");
