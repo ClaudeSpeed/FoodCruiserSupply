@@ -92,7 +92,7 @@ public class ReportToFileProcessor implements Processor {
 		template.createDocument(data, new FileOutputStream("target/tempReportOdts/report-" + report.getSequNr() + ".odt"));
 		
 		File inputFile = new File("target/tempReportOdts/report-" + report.getSequNr() + ".odt");
-		File outputFile = new File("target/upload/report-" + report.getSequNr() + ".pdf");
+		File outputFile = new File("target/reportPdfs/report-" + report.getSequNr() + ".pdf");
 		 
 		// connect to an OpenOffice.org instance running on port 8100
 		OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100);
@@ -104,9 +104,19 @@ public class ReportToFileProcessor implements Processor {
 		 
 		// close the connection
 		connection.disconnect();
-		
+
 		exchange.getIn().setBody(output);
 
+	}
+	
+	public void moveFile(String quelle, String ziel){
+		 
+		try {
+			File quellDatei = new File(quelle);
+			File zielDatei = new File(ziel);
+			quellDatei.renameTo(zielDatei);
+		} catch (Exception e) {
+			e.printStackTrace();}
 	}
 
 }

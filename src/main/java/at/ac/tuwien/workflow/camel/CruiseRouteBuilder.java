@@ -128,7 +128,7 @@ public class CruiseRouteBuilder extends RouteBuilder {
 	    	//generate temporary text file and convert to PDF
 	    	from("foodSupplyCruise-jms:queue:advancedConvertedReports.queue")
 		    	.process(new ReportToFileProcessor())
-	    		.to("file://target/tempReports");
+	    		.to("file://target/upload");
 	    	
 	        //configure properties component
 	        PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
