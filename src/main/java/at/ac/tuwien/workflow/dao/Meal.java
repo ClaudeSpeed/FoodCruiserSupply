@@ -18,7 +18,6 @@ public class Meal implements Serializable {
 	}
 
 	public Meal() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public List<Ingredient> getIngredients() {

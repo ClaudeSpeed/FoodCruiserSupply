@@ -1,5 +1,6 @@
 package at.ac.tuwien.workflow.processors;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.activation.DataHandler;
@@ -7,16 +8,17 @@ import javax.activation.DataHandler;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
+import at.ac.tuwien.workflow.dao.Invoice;
 import at.ac.tuwien.workflow.dao.Order;
 import at.ac.tuwien.workflow.helper.Helper;
 
 import com.thoughtworks.xstream.XStream;
 
-public class MyMailProcessor implements Processor {
+public class ToInvoiceProcessor implements Processor {
 
 	@Override
 	public void process(Exchange exchange) throws Exception {
-		System.out.println("MyMailProcessor");
+		System.out.println("ToInvoiceProcessor");
 
 		// Mock received Attachment
 		Helper h = new Helper();
@@ -59,10 +61,11 @@ public class MyMailProcessor implements Processor {
 		}
 		
 		if(order.getOrderNr() != null){
-			exchange.getIn().setHeader("OrderID", order.getOrderNr());
+			Invoice iv = new Invoice(order.getList().getMeals(), new Date(), "$");
+			exchange.getIn().setBody(iv);
 		}
 
-		System.out.println("EndMyMailProcessor");
+		System.out.println("EndToInvoiceProcessor");
 	}
 
 }

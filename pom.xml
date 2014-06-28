@@ -67,7 +67,7 @@
             <artifactId>camel-ftp</artifactId>
         </dependency>
 
-	 <!-- Twitter and Facebook dependencies -->	
+	 <!-- Twitter, Facebook, RSS dependencies -->	
 		<dependency>
     		<groupId>org.apache.camel</groupId>
     		<artifactId>camel-twitter</artifactId>
@@ -75,6 +75,10 @@
 		<dependency>
     		<groupId>org.apache.camel</groupId>
     		<artifactId>camel-facebook</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.apache.camel</groupId>
+    		<artifactId>camel-rss</artifactId>
 		</dependency>
 
 		<!-- ActiveMQ dependencies -->

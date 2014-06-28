@@ -3,34 +3,28 @@ package at.ac.tuwien.workflow.processors;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.springframework.asm.Handle;
-
-import com.thoughtworks.xstream.XStream;
 
 import at.ac.tuwien.workflow.dao.Order;
 import at.ac.tuwien.workflow.helper.Helper;
 
-public class ToMailProcessor implements Processor {
+import com.thoughtworks.xstream.XStream;
+
+public class AskPriceProcessor implements Processor {
 
 	@Override
 	public void process(Exchange exchange) throws Exception {
 		
-		System.out.println("ToMailProcessor");
-		Order order = exchange.getIn().getBody(Order.class);
-		String i = order.getOrderNr();
-		
-		Helper h = new Helper();
-		//exchange.getIn().setHeader("to", h.getRecipientList());
-		//exchange.getIn().setHeader("to", exchange.getIn().getHeader("from"));
-		exchange.getIn().setHeader("to", "foodsupplycruiser@gmail.com");
+		System.out.println("AskPriceProcessor");
+		Helper helper = new Helper();
+		exchange.getIn().setHeader("to", helper.getRecipientList());
 		exchange.getIn().setHeader("from", "foodsupplycruiser@gmail.com");
-		exchange.getIn().setHeader("subject", "OrderNr " + order.getOrderNr());
+		exchange.getIn().setHeader("subject", "PriceRequest");
+		
+		Order order = exchange.getIn().getMandatoryBody(Order.class);
 		
 		XStream xstream = new XStream();
 		String plXML = xstream.toXML(order);
@@ -45,10 +39,9 @@ public class ToMailProcessor implements Processor {
 	            writer.close();
 	    }
 	    
-	    exchange.getIn().setBody("Please fulfill the order request");
+	    exchange.getIn().setBody("Please fill out the order");
 		exchange.getIn().addAttachment("Order", new DataHandler(new FileDataSource(tempFile)));
 		
-		System.out.println("EndToMailProcessor");
+		System.out.println("EndAskPriceProcessor");
 	}
-
 }

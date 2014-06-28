@@ -1,9 +1,11 @@
 package at.ac.tuwien.workflow.dao;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Order {
+public class Order implements Serializable {
 
+	private static final long serialVersionUID = -121152686779480700L;
 	private String orderNr = "";
 	private Date dateCreated = new Date();
 	private Date dateReceived = new Date();

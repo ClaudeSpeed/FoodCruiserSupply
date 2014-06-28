@@ -13,15 +13,16 @@ import org.apache.camel.impl.DefaultCamelContext;
 import at.ac.tuwien.workflow.dao.Ingredient;
 import at.ac.tuwien.workflow.dao.Invoice;
 import at.ac.tuwien.workflow.dao.Meal;
+import at.ac.tuwien.workflow.dao.Order;
 import at.ac.tuwien.workflow.dao.PurchaseList;
 
 public final class CamelMainClass {
     
 	//twitter account credentials
-	private static String consumerKey = "WuRNypprsexhZtWmjOC0qa95y";
-    private static String consumerSecret = "7e2mdWsXpZlCxe3cj1fQFzH9xJXDR57ORo5a4gYzPEQlowh5bg";
-    private static String accessToken = "1426115462-pLnbFV2yDQZc4c2sWEbY0HeWsPNOoaZvcFG0LB2";
-    private static String accessTokenSecret = "0pSYQE4xFVi9GlaIWCP3BpOrM2BJwUcTPvbkaBG12Sg1j";
+		private static String consumerKey = "DIEFSMeTdUOyng3caQu95oLbA";
+	    private static String consumerSecret = "uA4rUObPXJhcFcN3UtDhcxxSsw5cpKcjjYV7tYubnlAk8Xa2eB";
+	    private static String accessToken = "2525488392-5gnV3UkCw6TVamQA7TEfybCyKF0FgzieacSucGK";
+	    private static String accessTokenSecret = "RAayJ7wP4oEwEwH1Z5Zgwu2xSefbXvkPyFC5WhZZPHsWH";
 	
     public static void main(String args[]) throws Exception {
     	
@@ -46,27 +47,43 @@ public final class CamelMainClass {
         context.start();
         
 		//Purchaselist for 400 persons
-		Meal carbonara = new Meal("Spaghetti a la Carbonara",true);
+		Meal carbonara = new Meal("Spaghetti a la Carbonara", true);
 		carbonara.addIngredient(new Ingredient("Spaghetti",60,"kg",300));
 		carbonara.addIngredient(new Ingredient("Ham",30,"kg",1000));
 		carbonara.addIngredient(new Ingredient("Cream",10,"l",200));
 		carbonara.addIngredient(new Ingredient("Eggs",600,"units",500));
 		carbonara.addIngredient(new Ingredient("Parmesan",10,"kg",650));
 		
+		//nonPricesMeal
+		Meal carbonaraNonPriced = new Meal("Spaghetti a la Carbonara", true);
+		carbonaraNonPriced.addIngredient(new Ingredient("Spaghetti",60,"kg"));
+		carbonaraNonPriced.addIngredient(new Ingredient("Ham",30,"kg"));
+		carbonaraNonPriced.addIngredient(new Ingredient("Cream",10,"l"));
+		carbonaraNonPriced.addIngredient(new Ingredient("Eggs",600,"units"));
+		carbonaraNonPriced.addIngredient(new Ingredient("Parmesan",10,"kg"));
+		
 		PurchaseList purchList = new PurchaseList(new Date(),"lunch");
-		purchList.addMeal(carbonara);
+		purchList.addMeal(carbonaraNonPriced);
+		
+		Order order = new Order();
+		order.setList(purchList);
+		order.setDateCreated(new Date());
+		order.setOrderNr("723");
+		
+		//start is the order
+		template.sendBody("foodSupplyCruise-jms:queue:orderIn.queue", order);
 		
 		//We get an invoice from the local retailer including the asked ingredients (incl. price),
 		//invoiceDate and invoiceCurrency (here: Fiji Dollars).
-		Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "FJD");
+		Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "$");
 		
 		//starts the business process after getting the invoice
-		template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
+		//template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
 		
 		ProducerTemplate templateTwitter = context.createProducerTemplate();
 		//templateTwitter.sendBody("direct:tweet", purchList);
 
-		Thread.sleep(5000);
+		Thread.sleep(30000);
 		
         context.stop();
     }
