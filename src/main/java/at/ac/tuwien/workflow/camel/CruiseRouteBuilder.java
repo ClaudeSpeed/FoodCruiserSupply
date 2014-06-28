@@ -23,10 +23,10 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	
     	boolean runErrorHandling = false;
     	boolean runWeather = false;
-    	boolean runMail = true;
+    	boolean runMail = false;
     	boolean runTwitter = false;
-    	boolean runCurrencyConverter = false;
-    	boolean runFtpStore = false;
+    	boolean runCurrencyConverter = true;
+    	boolean runFtpStore = true;
     	boolean runFacebook = false;
     	boolean runRSS = false;
     	
@@ -102,6 +102,7 @@ public class CruiseRouteBuilder extends RouteBuilder {
             setBody(xpath("/rss/channel/item/title/text()")).
             to("bean:rss");
     	}
+    	
 		//generate report, convert currency, calculate exchange profit
     	if (runCurrencyConverter) {
 	        //generate report for accountancy

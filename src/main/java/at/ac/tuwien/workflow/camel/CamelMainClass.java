@@ -54,7 +54,11 @@ public final class CamelMainClass {
 		carbonara.addIngredient(new Ingredient("Eggs",600,"units",500));
 		carbonara.addIngredient(new Ingredient("Parmesan",10,"kg",650));
 		
+		PurchaseList purchList = new PurchaseList(new Date(),"lunch");
+		purchList.addMeal(carbonara);
+		
 		//nonPricesMeal
+		//TODO @luke prices must be added to the ingredient beans during mail process
 		Meal carbonaraNonPriced = new Meal("Spaghetti a la Carbonara", true);
 		carbonaraNonPriced.addIngredient(new Ingredient("Spaghetti",60,"kg"));
 		carbonaraNonPriced.addIngredient(new Ingredient("Ham",30,"kg"));
@@ -62,11 +66,11 @@ public final class CamelMainClass {
 		carbonaraNonPriced.addIngredient(new Ingredient("Eggs",600,"units"));
 		carbonaraNonPriced.addIngredient(new Ingredient("Parmesan",10,"kg"));
 		
-		PurchaseList purchList = new PurchaseList(new Date(),"lunch");
-		purchList.addMeal(carbonaraNonPriced);
+		PurchaseList purchListNonPriced = new PurchaseList(new Date(),"lunch");
+		purchListNonPriced.addMeal(carbonaraNonPriced);
 		
 		Order order = new Order();
-		order.setList(purchList);
+		order.setList(purchListNonPriced);
 		order.setDateCreated(new Date());
 		order.setOrderNr("723");
 		
@@ -75,10 +79,10 @@ public final class CamelMainClass {
 		
 		//We get an invoice from the local retailer including the asked ingredients (incl. price),
 		//invoiceDate and invoiceCurrency (here: Fiji Dollars).
-		Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "$");
+		Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "FJD");
 		
 		//starts the business process after getting the invoice
-		//template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
+		template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
 		
 		ProducerTemplate templateTwitter = context.createProducerTemplate();
 		//templateTwitter.sendBody("direct:tweet", purchList);
