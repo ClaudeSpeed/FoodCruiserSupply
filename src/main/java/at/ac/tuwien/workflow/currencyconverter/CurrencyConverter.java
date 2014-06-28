@@ -22,7 +22,7 @@ public class CurrencyConverter {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
- 
+        
         return 0;
     }
     

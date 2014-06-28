@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import at.ac.tuwien.workflow.currencyconverter.CurrencyConverter;
 
@@ -21,7 +22,15 @@ public class Invoice implements Serializable {
 		setMeals(meals);
 		this.invoiceDate = invoiceDate;
 		this.totalAmountCurrency = totalAmountCurrency;
-		rateOfInvoiceDate = (1/ new CurrencyConverter().getRate(totalAmountCurrency));		
+		
+		//fork currency rate difference with random deviation
+		double d = 0.0;
+		do {
+		    Random r = new Random(); 
+		    d = -0.01 + r.nextDouble() * 0.02; 
+		} while (!(d >= -0.01 && d <= 0.01));
+		
+		rateOfInvoiceDate = (1/ new CurrencyConverter().getRate(totalAmountCurrency)) * (1-d);		
 	}
 	
 	public double getRateOfInvoiceDate() {

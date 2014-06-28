@@ -24,8 +24,8 @@ public class CruiseRouteBuilder extends RouteBuilder {
 	
     public void configure() {
     	
-    	boolean runErrorHandling = true;
-    	boolean runWeather = true;
+    	boolean runErrorHandling = false;
+    	boolean runWeather = false;
     	boolean runMail = false;
     	boolean runTwitter = false;
     	boolean runCurrencyConverter = true;
@@ -97,23 +97,21 @@ public class CruiseRouteBuilder extends RouteBuilder {
 		    	.process(new ExchangeProfitProcessor())
 	    		.to("foodSupplyCruise-jms:queue:advancedConvertedReports.queue");
 	    	
-	    	//calculate exchange profit
+    	}
+		
+		//generate report as a file and store this file on ftp server
+    	if (runFtpStore) {
+	    	
+	    	//generate file
 	    	from("foodSupplyCruise-jms:queue:advancedConvertedReports.queue")
 		    	.process(new ReportToFileProcessor())
 	    		.to("file://target/upload");
 	    	
-    	}
-		
-		//generate report as a file and store on ftp server
-    	if (runFtpStore) {
-	    	
-
-	    	
-	        // configure properties component
+	        //configure properties component
 	        PropertiesComponent pc = getContext().getComponent("properties", PropertiesComponent.class);
 	        pc.setLocation("classpath:ftp.properties");
 
-	        // lets shutdown faster in case of in-flight messages stack up
+	        //lets shutdown faster in case of in-flight messages stack up
 	        getContext().getShutdownStrategy().setTimeout(10);
 	        
 	        //store on ftp server

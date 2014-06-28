@@ -25,9 +25,8 @@ public class AccountancyReport implements Serializable {
 		rateOfPaymentDate = new CurrencyConverter().getRate(invoice.getTotalAmountCurrency());
 	}
 	
-	//TODO 1 % gain for testing purposes
 	public void calculateExchangeProfit() {
-		exchangeProfit = convertedTotalAmount - (invoice.getTotalAmount() * invoice.getRateOfInvoiceDate() *0.99);
+		exchangeProfit = convertedTotalAmount - (invoice.getTotalAmount() * invoice.getRateOfInvoiceDate());
 	}
 
 	public String getConvertedTotalAmountCurrency() {

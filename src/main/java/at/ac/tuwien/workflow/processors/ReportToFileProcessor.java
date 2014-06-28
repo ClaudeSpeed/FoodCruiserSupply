@@ -15,8 +15,8 @@ public class ReportToFileProcessor implements Processor {
 		
 		AccountancyReport report = exchange.getIn().getBody(AccountancyReport.class);		
 		
-		DecimalFormat df2 = new DecimalFormat("#.##");
-		DecimalFormat df4 = new DecimalFormat("#.####");
+		DecimalFormat df2 = new DecimalFormat("#.00");
+		DecimalFormat df4 = new DecimalFormat("#.0000");
 		String output = "Accountancy report for invoice from " + report.getInvoice().getInvoiceDate() + "\n\n";
 		
 		output += "Meals:\n";
