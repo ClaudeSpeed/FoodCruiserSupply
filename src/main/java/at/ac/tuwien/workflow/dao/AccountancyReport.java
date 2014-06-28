@@ -14,12 +14,31 @@ public class AccountancyReport implements Serializable {
 	private double convertedTotalAmount;
 	private String convertedTotalAmountCurrency;
 	private double exchangeProfit;
+	private int sequNr;
+	private Date creationDate;
 	
 	public AccountancyReport(Invoice invoice) {
 		super();
 		this.invoice = invoice;
+		creationDate = new Date();
 	}
-	
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public int getSequNr() {
+		return sequNr;
+	}
+
+	public void setSequNr(int sequNr) {
+		this.sequNr = sequNr;
+	}
+
 	public void settleInvoice() {
 		paymentDate = new Date();
 		rateOfPaymentDate = new CurrencyConverter().getRate(invoice.getTotalAmountCurrency());

@@ -61,7 +61,7 @@ public class ToInvoiceProcessor implements Processor {
 		}
 		
 		if(order.getOrderNr() != null){
-			Invoice iv = new Invoice(order.getList().getMeals(), new Date(), "$");
+			Invoice iv = new Invoice(order.getList().getMeals(), new Date(), "FJD", "Fiji Food Delivery Inc.");
 			exchange.getIn().setBody(iv);
 		}
 

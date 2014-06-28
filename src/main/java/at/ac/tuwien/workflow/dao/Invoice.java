@@ -16,12 +16,14 @@ public class Invoice implements Serializable {
 	private double totalAmount;
 	private String totalAmountCurrency;
 	private double rateOfInvoiceDate;
+	private String companyName;
 	
-	public Invoice(List<Meal> meals, Date invoiceDate, String totalAmountCurrency) {
+	public Invoice(List<Meal> meals, Date invoiceDate, String totalAmountCurrency, String companyName) {
 		super();
 		setMeals(meals);
 		this.invoiceDate = invoiceDate;
 		this.totalAmountCurrency = totalAmountCurrency;
+		this.companyName = companyName;
 		
 		//fork currency rate difference with random deviation
 		double d = 0.0;
@@ -33,6 +35,14 @@ public class Invoice implements Serializable {
 		rateOfInvoiceDate = (1/ new CurrencyConverter().getRate(totalAmountCurrency)) * (1-d);		
 	}
 	
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
 	public double getRateOfInvoiceDate() {
 		return rateOfInvoiceDate;
 	}
@@ -41,8 +51,7 @@ public class Invoice implements Serializable {
 	public void setRateOfInvoiceDate(double rateOfInvoiceDate) {
 		this.rateOfInvoiceDate = rateOfInvoiceDate;
 	}
-
-
+	
 	public List<Meal> getMeals() {
 		return meals;
 	}
