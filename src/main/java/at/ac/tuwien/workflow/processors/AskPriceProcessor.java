@@ -24,11 +24,13 @@ public class AskPriceProcessor implements Processor {
 		exchange.getIn().setHeader("from", "foodsupplycruiser@gmail.com");
 		exchange.getIn().setHeader("subject", "PriceRequest");
 		
+		//Get order from JMS
 		Order order = exchange.getIn().getMandatoryBody(Order.class);
 		
+		//Translate order to xml
 		XStream xstream = new XStream();
 		String plXML = xstream.toXML(order);
-		
+		//Create xml-File
 		File tempFile = File.createTempFile("Order", ".xml");
 	    PrintWriter writer = null;
 	    try {
@@ -39,7 +41,17 @@ public class AskPriceProcessor implements Processor {
 	            writer.close();
 	    }
 	    
-	    exchange.getIn().setBody("Please fill out the order");
+	    //Genereate Msg
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("<h2>Dear Retailer!</h2><br />");
+	    sb.append("We are approaching your haven and want to order some supplies.<br />");
+	    sb.append("Please fill out the attached xml-File and send it back to us within 10 sec.<br /><br />");
+	    sb.append("We will decide on the total price which retailer will get the order.<br />");
+	    sb.append("Sincerly, The FoodSupplyCruiser.");
+	   
+	    //set Msg
+	    exchange.getIn().setBody(sb.toString());
+	    //set order as Attachment
 		exchange.getIn().addAttachment("Order", new DataHandler(new FileDataSource(tempFile)));
 		
 		System.out.println("EndAskPriceProcessor");

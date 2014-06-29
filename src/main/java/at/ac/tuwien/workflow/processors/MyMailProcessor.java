@@ -20,12 +20,10 @@ public class MyMailProcessor implements Processor {
 
 		// Mock received Attachment
 		Helper h = new Helper();
-		exchange.getIn().addAttachment("Order", h.getAttachment());
+		exchange.getIn().addAttachment("Order", h.getAttachment(exchange.getIn().getHeader("from").toString()));
 		// endMock
 
-		exchange.getIn().setHeader("Price",
-				exchange.getIn().getBody(String.class));
-
+		//debug
 		Map<String, Object> headers = exchange.getIn().getHeaders();
 		String header = "";
 		for (String key : headers.keySet()) {
@@ -35,8 +33,10 @@ public class MyMailProcessor implements Processor {
 			if (key.equals("subject"))
 				header += "Subject: " + obj + "\n";
 		}
+		//System.out.println("Header" + header);
+		
+		//Handle Attachment
 		String nachricht = "";
-
 		Map<String, DataHandler> attachments = exchange.getIn()
 				.getAttachments();
 		if (attachments.size() > 0) {
@@ -45,11 +45,11 @@ public class MyMailProcessor implements Processor {
 				String data = exchange.getContext().getTypeConverter()
 						.convertTo(String.class, dh.getInputStream());
 				nachricht = data.toString();
-				//System.out.println(nachricht);
 			}
 		}
-		Order order = new Order();
 		
+		//Transform XML to Order
+		Order order = new Order();
 		try {
 			XStream xstream = new XStream();
 			order = (Order) xstream.fromXML(nachricht);
@@ -58,8 +58,12 @@ public class MyMailProcessor implements Processor {
 			System.out.println("Exception:" + e.getMessage());
 		}
 		
+		//set header with significant data for easier handling
 		if(order.getOrderNr() != null){
 			exchange.getIn().setHeader("OrderID", order.getOrderNr());
+		}
+		if(order.getPrice() != 0){
+			exchange.getIn().setHeader("TotalPrice", order.getPrice());
 		}
 
 		System.out.println("EndMyMailProcessor");

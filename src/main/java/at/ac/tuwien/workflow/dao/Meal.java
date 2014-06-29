@@ -19,6 +19,14 @@ public class Meal implements Serializable {
 
 	public Meal() {
 	}
+	
+	public double getPrice(){
+		double price = 0;
+		for(Ingredient in : getIngredients()){
+			price += in.getPrice();
+		}
+		return price;
+	}
 
 	public List<Ingredient> getIngredients() {
 		return ingredients;

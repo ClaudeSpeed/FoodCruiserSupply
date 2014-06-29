@@ -22,12 +22,12 @@ public class CruiseRouteBuilder extends RouteBuilder {
     public void configure() {
     	
     	boolean runErrorHandling = false;
-    	boolean runWeather = false;
-    	boolean runMail = false;
-    	boolean runTwitter = false;
+    	boolean runWeather = true;
+    	boolean runMail = true;
+    	boolean runTwitter = true;
     	boolean runCurrencyConverter = true;
-    	boolean runFtpStore = false;
-    	boolean runFacebook = false;
+    	boolean runFtpStore = true;
+    	boolean runFacebook = true;
     	boolean runRSS = false;
     	
     	//RSS url
@@ -37,7 +37,7 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	//errorHandling
     	if (runErrorHandling) {
 	        errorHandler(deadLetterChannel("foodSupplyCruise-jms:queue:error.queue")
-	           .useOriginalMessage().maximumRedeliveries(5)
+	           .useOriginalMessage().maximumRedeliveries(1)
 	           .onRedelivery(new ErrorProcessor())
 	           .redeliveryDelay(5000));
     	}
@@ -57,8 +57,8 @@ public class CruiseRouteBuilder extends RouteBuilder {
     		String username = "foodsupplycruiser@gmail.com";
     		String password = "foodSC01";
 
-    		Endpoint fromMail = endpoint("imaps://imap." + domain + ":993?username=" + username + "&password=" + password + "&fetchSize=1&searchTerm.subjectOrBody=OrderNr&unseen=true&consumer.delay=60000");
-    		Endpoint fromMailPrice = endpoint("imaps://imap." + domain + ":993?username=" + username + "&password=" + password + "&searchTerm.body=Price&unseen=true&consumer.delay=60000&debugMode=false");
+    		Endpoint fromMail = endpoint("imaps://imap." + domain + ":993?username=" + username + "&password=" + password + "&fetchSize=1&searchTerm.subjectOrBody=Order&unseen=true&consumer.delay=60000");
+    		Endpoint fromMailPrice = endpoint("imaps://imap." + domain + ":993?username=" + username + "&password=" + password + "&searchTerm.subjectOrBody=PriceRequest&unseen=true&consumer.delay=60000&debugMode=false");
     		Endpoint toMail = endpoint("smtps://smtp." + domain + ":465?username=" + username + "&password=" + password);
 
     		//ask for price for order

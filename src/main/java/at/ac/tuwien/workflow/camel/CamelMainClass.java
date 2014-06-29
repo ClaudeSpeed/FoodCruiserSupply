@@ -46,36 +46,25 @@ public final class CamelMainClass {
         
         context.start();
         
-		//Purchaselist for 400 persons
-        PurchaseList purchList = new PurchaseList(new Date(),"lunch");
-        
-		Meal carbonara = new Meal("Spaghetti a la Carbonara", true);
-		carbonara.addIngredient(new Ingredient("Spaghetti",60,"kg",300));
-		carbonara.addIngredient(new Ingredient("Ham",30,"kg",1000));
-		carbonara.addIngredient(new Ingredient("Cream",10,"l",200));
-		carbonara.addIngredient(new Ingredient("Eggs",600,"units",600));
-		carbonara.addIngredient(new Ingredient("Parmesan",10,"kg",650));
-		purchList.addMeal(carbonara);
-		
-		Meal tiramisu = new Meal("Tiramisu", false);
-		tiramisu.addIngredient(new Ingredient("Eggs",200,"units",200));
-		tiramisu.addIngredient(new Ingredient("Sugar",5,"kg",30));
-		tiramisu.addIngredient(new Ingredient("Mascarpone",20,"kg",400));
-		tiramisu.addIngredient(new Ingredient("Ladyfingers",15,"kg",500));
-		tiramisu.addIngredient(new Ingredient("Coffee liqueur",3,"l",150));
-		tiramisu.addIngredient(new Ingredient("Kakao powder",1,"kg",50));
-		purchList.addMeal(tiramisu);
-		
 		//nonPricesMeal
-		//TODO @luke prices must be added to the ingredient beans during mail process
 		PurchaseList purchListNonPriced = new PurchaseList(new Date(),"lunch");
+        
 		Meal carbonaraNonPriced = new Meal("Spaghetti a la Carbonara", true);
-		carbonaraNonPriced.addIngredient(new Ingredient("Spaghetti",60,"kg"));
-		carbonaraNonPriced.addIngredient(new Ingredient("Ham",30,"kg"));
-		carbonaraNonPriced.addIngredient(new Ingredient("Cream",10,"l"));
-		carbonaraNonPriced.addIngredient(new Ingredient("Eggs",600,"units"));
-		carbonaraNonPriced.addIngredient(new Ingredient("Parmesan",10,"kg"));
+		carbonaraNonPriced.addIngredient(new Ingredient("Spaghetti",60,"kg",300));
+		carbonaraNonPriced.addIngredient(new Ingredient("Ham",30,"kg",1000));
+		carbonaraNonPriced.addIngredient(new Ingredient("Cream",10,"l",200));
+		carbonaraNonPriced.addIngredient(new Ingredient("Eggs",600,"units",600));
+		carbonaraNonPriced.addIngredient(new Ingredient("Parmesan",10,"kg",650));
 		purchListNonPriced.addMeal(carbonaraNonPriced);
+		
+		Meal tiramisuNonPriced = new Meal("Tiramisu", false);
+		tiramisuNonPriced.addIngredient(new Ingredient("Eggs",200,"units",200));
+		tiramisuNonPriced.addIngredient(new Ingredient("Sugar",5,"kg",30));
+		tiramisuNonPriced.addIngredient(new Ingredient("Mascarpone",20,"kg",400));
+		tiramisuNonPriced.addIngredient(new Ingredient("Ladyfingers",15,"kg",500));
+		tiramisuNonPriced.addIngredient(new Ingredient("Coffee liqueur",3,"l",150));
+		tiramisuNonPriced.addIngredient(new Ingredient("Kakao powder",1,"kg",50));
+		purchListNonPriced.addMeal(tiramisuNonPriced);
 		
 		Order order = new Order();
 		order.setList(purchListNonPriced);
@@ -88,15 +77,15 @@ public final class CamelMainClass {
 		//We get an invoice from the local retailer including the asked ingredients (incl. price),
 		//invoiceDate and invoiceCurrency (here: Fiji Dollars).
 		//TODO @luke currency and companyName must be added to the ingredient beans during mail process
-		Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "FJD", "Fiji Food Delivery Inc.");
+		//Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "FJD", "Fiji Food Delivery Inc.");
 		
 		//starts the business process after getting the invoice
-		template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
+		//template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
 		
 		ProducerTemplate templateTwitter = context.createProducerTemplate();
 		//templateTwitter.sendBody("direct:tweet", purchList);
 
-		Thread.sleep(30000);
+		Thread.sleep(10000);
 		
         context.stop();
     }

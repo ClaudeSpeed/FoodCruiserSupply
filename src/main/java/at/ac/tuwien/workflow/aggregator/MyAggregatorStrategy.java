@@ -11,16 +11,16 @@ public class MyAggregatorStrategy implements AggregationStrategy {
 			return newExchange;
 		
 		System.out.println("MyAggregatorStrategy");
-		String oldPriceString = oldExchange.getIn().getHeader("Price", String.class);
-		String newPriceString = newExchange.getIn().getHeader("Price", String.class);
-		oldPriceString = oldPriceString.replace("Price=", "");
-		newPriceString = newPriceString.replace("Price=", "");
-		oldPriceString = oldPriceString.replace("€", "").trim();
-		newPriceString = newPriceString.replace("€", "").trim();
-//		System.out.println("OldPrice:" + oldPriceString);
-//		System.out.println("NewPrice:" + newPriceString);
-		int oldPrice = Integer.parseInt(oldPriceString);
-		int newPrice = Integer.parseInt(newPriceString);
+		String oldPriceString = oldExchange.getIn().getHeader("TotalPrice", String.class);
+		String newPriceString = newExchange.getIn().getHeader("TotalPrice", String.class);
+//		oldPriceString = oldPriceString.replace("TotalPrice=", "");
+//		newPriceString = newPriceString.replace("TotalPrice=", "");
+//		oldPriceString = oldPriceString.replace("€", "").trim();
+//		newPriceString = newPriceString.replace("€", "").trim();
+		System.out.println("OldPrice:" + oldPriceString);
+		System.out.println("NewPrice:" + newPriceString);
+		Double oldPrice = Double.parseDouble(oldPriceString);
+		Double newPrice = Double.parseDouble(newPriceString);
 		if(oldPrice > newPrice)
 		{
 			return newExchange;
