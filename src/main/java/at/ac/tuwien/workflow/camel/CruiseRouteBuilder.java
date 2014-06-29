@@ -26,7 +26,7 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	boolean runMail = false;
     	boolean runTwitter = false;
     	boolean runCurrencyConverter = true;
-    	boolean runFtpStore = true; //leave at false - this needs additional software installed to work
+    	boolean runFtpStore = false; //leave at false - this needs additional software installed to work
     	boolean runFacebook = false;
     	boolean runRSS = false;
     	

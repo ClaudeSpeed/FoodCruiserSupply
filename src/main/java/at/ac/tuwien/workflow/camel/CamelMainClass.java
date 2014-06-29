@@ -77,10 +77,10 @@ public final class CamelMainClass {
 		//We get an invoice from the local retailer including the asked ingredients (incl. price),
 		//invoiceDate and invoiceCurrency (here: Fiji Dollars).
 		//TODO @luke currency and companyName must be added to the ingredient beans during mail process
-		Invoice invoice = new Invoice(purchListNonPriced.getMeals(), new Date(), "FJD", "Fiji Food Delivery Inc.");
+		//Invoice invoice = new Invoice(purchListNonPriced.getMeals(), new Date(), "FJD", "Fiji Food Delivery Inc.");
 		
 		//starts the business process after getting the invoice
-		template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
+		//template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
 		
 		ProducerTemplate templateTwitter = context.createProducerTemplate();
 		//templateTwitter.sendBody("direct:tweet", purchList);
