@@ -23,18 +23,21 @@ public class ToMailProcessor implements Processor {
 		
 		System.out.println("ToMailProcessor");
 		Order order = exchange.getIn().getBody(Order.class);
-		String i = order.getOrderNr();
 		
 		Helper h = new Helper();
-		//exchange.getIn().setHeader("to", h.getRecipientList());
-		//exchange.getIn().setHeader("to", exchange.getIn().getHeader("from"));
-		exchange.getIn().setHeader("to", "foodsupplycruiser@gmail.com");
+		//Set receipients
+		 //
+		exchange.getIn().setHeader("to", exchange.getIn().getHeader("from"));;
+		//exchange.getIn().setHeader("to", "reailersuperduper@gmail.com");
 		exchange.getIn().setHeader("from", "foodsupplycruiser@gmail.com");
 		exchange.getIn().setHeader("subject", "OrderNr " + order.getOrderNr());
+		//exchange.getIn().setHeader("subject", "OrderNr");
 		
+		//Translate into xml
 		XStream xstream = new XStream();
 		String plXML = xstream.toXML(order);
 		
+		//create xml-file
 		File tempFile = File.createTempFile("Order", ".xml");
 	    PrintWriter writer = null;
 	    try {
@@ -45,8 +48,20 @@ public class ToMailProcessor implements Processor {
 	            writer.close();
 	    }
 	    
-	    exchange.getIn().setBody("Please fulfill the order request");
+	    //generate msg
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("Dear Retailer,<br />");
+	    sb.append("You won the bidding. <br />");
+	    sb.append("Please fullfill the attached order until the 20th of June");
+	    sb.append("Sincerly, The FoodSupplyCruiser.");
+	    
+	    //set Msg
+	    exchange.getIn().setBody(sb.toString());
+	    //attach file
 		exchange.getIn().addAttachment("Order", new DataHandler(new FileDataSource(tempFile)));
+		
+		//remove this header to let the mail component set the right one
+		exchange.getIn().removeHeader("content-type");
 		
 		System.out.println("EndToMailProcessor");
 	}

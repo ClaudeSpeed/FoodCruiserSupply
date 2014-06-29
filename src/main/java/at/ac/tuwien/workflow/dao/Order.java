@@ -10,6 +10,15 @@ public class Order implements Serializable {
 	private Date dateCreated = new Date();
 	private Date dateReceived = new Date();
 	private PurchaseList list;
+	private String currency = "";
+	
+	public double getPrice(){
+		double price = 0;
+		for(Meal m : getList().getMeals()){
+			price += m.getPrice();
+		}
+		return price;
+	}
 	
 	public String getOrderNr() {
 		return orderNr;
@@ -34,6 +43,14 @@ public class Order implements Serializable {
 	}
 	public void setList(PurchaseList list) {
 		this.list = list;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 	
 	
