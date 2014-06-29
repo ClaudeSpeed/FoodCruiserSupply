@@ -39,7 +39,7 @@ public class GenerateReportProcessor implements Processor {
 	}
 
 	public static int getCurrentSequenceNumber() throws IOException  {
-		String path = "target/reportTemplate/sequenceNumber.txt";
+		String path = "config/sequenceNumber.txt";
 		Charset encoding = StandardCharsets.UTF_8;
 		
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
@@ -51,7 +51,7 @@ public class GenerateReportProcessor implements Processor {
 	}
 	
 	public static void incrementSequenceNumber(int actSequNr) throws FileNotFoundException, UnsupportedEncodingException {
-		PrintWriter writer = new PrintWriter("target/reportTemplate/sequenceNumber.txt", "UTF-8");
+		PrintWriter writer = new PrintWriter("config/sequenceNumber.txt", "UTF-8");
 		int newSequNr = actSequNr + 1;
 		writer.print(newSequNr);
 		writer.close();

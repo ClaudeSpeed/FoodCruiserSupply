@@ -71,7 +71,7 @@ public class ReportToFileProcessor implements Processor {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		
 		DocumentTemplateFactory documentTemplateFactory = new DocumentTemplateFactory();
-		DocumentTemplate template = documentTemplateFactory.getTemplate(new File("target/reportTemplate/reportTemplate.odt"));
+		DocumentTemplate template = documentTemplateFactory.getTemplate(new File("config/reportTemplate.odt"));
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("sequNr", String.valueOf(report.getSequNr()));
 		data.put("reportDate", dateFormat.format(report.getCreationDate()));

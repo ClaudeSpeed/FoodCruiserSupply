@@ -95,7 +95,7 @@ public final class CamelMainClass {
 		
 		ProducerTemplate templateTwitter = context.createProducerTemplate();
 		//templateTwitter.sendBody("direct:tweet", purchList);
-
+		
 		Thread.sleep(30000);
 		
         context.stop();
