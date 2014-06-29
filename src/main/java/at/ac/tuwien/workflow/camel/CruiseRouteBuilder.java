@@ -22,12 +22,12 @@ public class CruiseRouteBuilder extends RouteBuilder {
     public void configure() {
     	
     	boolean runErrorHandling = false;
-    	boolean runWeather = true;
-    	boolean runMail = true;
-    	boolean runTwitter = true;
+    	boolean runWeather = false;
+    	boolean runMail = false;
+    	boolean runTwitter = false;
     	boolean runCurrencyConverter = true;
-    	boolean runFtpStore = true;
-    	boolean runFacebook = true;
+    	boolean runFtpStore = false; //leave at false - this needs additional software installed to work
+    	boolean runFacebook = false;
     	boolean runRSS = false;
     	
     	//RSS url
