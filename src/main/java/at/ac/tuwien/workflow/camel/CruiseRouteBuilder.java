@@ -3,6 +3,7 @@ package at.ac.tuwien.workflow.camel;
 import org.apache.camel.Endpoint;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.hazelcast.HazelcastConstants;
 import org.apache.camel.component.properties.PropertiesComponent;
 import org.apache.camel.component.twitter.TwitterComponent;
 
@@ -26,7 +27,7 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	boolean runMail = false;
     	boolean runTwitter = false;
     	boolean runCurrencyConverter = true;
-    	boolean runFtpStore = false; //leave at false - this needs additional software installed to work
+    	boolean runFtpStore = true; //leave at false - this needs additional software installed to work
     	boolean runFacebook = false;
     	boolean runRSS = false;
     	
@@ -105,6 +106,14 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	
 		//generate report, convert currency, calculate exchange profit
     	if (runCurrencyConverter) {
+    		
+        	//read database from caboose
+        	from("direct:get")
+        	.setHeader(HazelcastConstants.OPERATION, constant(HazelcastConstants.GET_OPERATION))
+        	//.toF("hazelcast:%smeals", HazelcastConstants.MAP_PREFIX)
+        	.process(new HazelcastProcessor())
+        	.to("foodSupplyCruise-jms:queue:processedMail.queue");
+    		
 	        //generate report for accountancy
 	    	from("foodSupplyCruise-jms:queue:processedMail.queue")
 		    	.process(new GenerateReportProcessor())

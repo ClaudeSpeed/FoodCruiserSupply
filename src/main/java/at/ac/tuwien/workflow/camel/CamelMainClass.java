@@ -15,6 +15,16 @@ import at.ac.tuwien.workflow.dao.Invoice;
 import at.ac.tuwien.workflow.dao.Meal;
 import at.ac.tuwien.workflow.dao.Order;
 import at.ac.tuwien.workflow.dao.PurchaseList;
+import at.ac.tuwien.workflow.hazelcast.DatabaseBuilder;
+
+import com.hazelcast.config.Config;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.MultiMap;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Queue;
 
 public final class CamelMainClass {
     
@@ -45,6 +55,9 @@ public final class CamelMainClass {
         ProducerTemplate template = context.createProducerTemplate();
         
         context.start();
+        
+        //start Hazelcast Database to get purchaselist from caboose
+        DatabaseBuilder.buildDatabase();
         
 		//nonPricesMeal
 		PurchaseList purchListNonPriced = new PurchaseList(new Date(),"lunch");
@@ -81,6 +94,7 @@ public final class CamelMainClass {
 		
 		//starts the business process after getting the invoice
 		//template.sendBody("foodSupplyCruise-jms:queue:processedMail.queue", invoice);
+		template.sendBody("direct:get", "hazelcast:multipmap:foo");
 		
 		ProducerTemplate templateTwitter = context.createProducerTemplate();
 		//templateTwitter.sendBody("direct:tweet", purchList);
@@ -88,6 +102,9 @@ public final class CamelMainClass {
 		Thread.sleep(10000);
 		
         context.stop();
+        
+        DatabaseBuilder.shutdownDb();
+        
     }
     
 }

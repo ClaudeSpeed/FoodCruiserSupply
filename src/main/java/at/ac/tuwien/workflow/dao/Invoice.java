@@ -2,6 +2,7 @@ package at.ac.tuwien.workflow.dao;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -21,7 +22,13 @@ public class Invoice implements Serializable {
 	public Invoice(List<Meal> meals, Date invoiceDate, String totalAmountCurrency, String companyName) {
 		super();
 		setMeals(meals);
-		this.invoiceDate = invoiceDate;
+		
+		//fork invoice date to be 3 days earlier
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(invoiceDate);
+		cal.add(Calendar.DATE, -3);
+		this.invoiceDate = cal.getTime();
+
 		this.totalAmountCurrency = totalAmountCurrency;
 		this.companyName = companyName;
 		

@@ -72,6 +72,11 @@
 		    <groupId>org.apache.camel</groupId>
 		    <artifactId>camel-http</artifactId>
 		</dependency>
+		<!-- Reading Database -->
+		<dependency>
+		    <groupId>org.apache.camel</groupId>
+		    <artifactId>camel-hazelcast</artifactId>
+		</dependency>
 
 	 <!-- Twitter, Facebook, RSS dependencies -->	
 		<dependency>
@@ -98,6 +103,13 @@
 	      <artifactId>jodconverter</artifactId>
 	      <version>2.2.1</version>
 	    </dependency>
+	    
+	    <!-- Creating Database -->
+        <dependency>
+	        <groupId>com.hazelcast</groupId>
+	        <artifactId>hazelcast</artifactId>
+	        <version>3.2</version> 
+    	</dependency>
 
 		<!-- ActiveMQ dependencies -->
 		<dependency>
