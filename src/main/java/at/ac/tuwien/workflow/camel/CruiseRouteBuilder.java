@@ -24,7 +24,8 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	
     	boolean runErrorHandling = false;
     	boolean runWeather = false;
-    	boolean runMail = false;
+    	boolean runHazelcast = true;
+    	boolean runMail = true;
     	boolean runTwitter = false;
     	boolean runCurrencyConverter = true;
     	boolean runFtpStore = true; //leave at false - this needs additional software installed to work
@@ -50,6 +51,17 @@ public class CruiseRouteBuilder extends RouteBuilder {
 	        	.choice()
 	        		.when(header("Rain")).to("file://noRain?fileName=${date:now:yyyy-MM-dd} WeatherData")
 	        		.otherwise().to("file://weather?fileName=${date:now:yyyy-MM-dd} WeatherData");
+    	}
+    	
+    	if (runHazelcast) {
+    		
+        	//read database from caboose
+        	from("direct:get")
+        	.setHeader(HazelcastConstants.OPERATION, constant(HazelcastConstants.GET_OPERATION))
+        	//.toF("hazelcast:%smeals", HazelcastConstants.MAP_PREFIX)
+        	.process(new HazelcastProcessor())
+        	.to("foodSupplyCruise-jms:queue:orderIn.queue");
+    		
     	}
     	
         //mail
@@ -106,13 +118,6 @@ public class CruiseRouteBuilder extends RouteBuilder {
     	
 		//generate report, convert currency, calculate exchange profit
     	if (runCurrencyConverter) {
-    		
-        	//read database from caboose
-        	from("direct:get")
-        	.setHeader(HazelcastConstants.OPERATION, constant(HazelcastConstants.GET_OPERATION))
-        	//.toF("hazelcast:%smeals", HazelcastConstants.MAP_PREFIX)
-        	.process(new HazelcastProcessor())
-        	.to("foodSupplyCruise-jms:queue:processedMail.queue");
     		
 	        //generate report for accountancy
 	    	from("foodSupplyCruise-jms:queue:processedMail.queue")

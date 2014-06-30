@@ -48,10 +48,10 @@ public class HazelcastProcessor implements Processor {
 		//We get an invoice from the local retailer including the asked ingredients (incl. price),
 		//invoiceDate and invoiceCurrency (here: Fiji Dollars).
 		//TODO @luke currency and companyName must be added to the ingredient beans during mail process
-		Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "FJD", "Fiji Food Delivery Inc.");
+		//Invoice invoice = new Invoice(purchList.getMeals(), new Date(), "FJD", "Fiji Food Delivery Inc.");
         
-		//exchange.getIn().setBody(order);
-		exchange.getIn().setBody(invoice);
+		exchange.getIn().setBody(order);
+		//exchange.getIn().setBody(invoice);
 		
 	}
 	

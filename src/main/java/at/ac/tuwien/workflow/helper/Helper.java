@@ -22,7 +22,14 @@ public class Helper {
 	public Order getPricedOder(String from) {
 		//Purchaselist for 400 persons
 		PurchaseList purchList = new PurchaseList(new Date(), "lunch");
-
+        
+        Meal tunasalad = new Meal("Tuna salad", true);
+        tunasalad.addIngredient(new Ingredient("Spaghetti", 60, "kg", 300));
+        tunasalad.addIngredient(new Ingredient("Eggs",100,"units",100));
+        tunasalad.addIngredient(new Ingredient("Tuna fish",15,"kg",1500));
+        tunasalad.addIngredient(new Ingredient("Tomato paste",5,"kg",300));
+        purchList.addMeal(tunasalad);
+        
 		Meal carbonara = new Meal("Spaghetti a la Carbonara", true);
 		carbonara.addIngredient(new Ingredient("Spaghetti", 60, "kg", 300));
 		carbonara.addIngredient(new Ingredient("Ham", 30, "kg", 1000));
